@@ -1,0 +1,65 @@
+<html>
+<head>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background:black;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+</body>   
+</html>
+
+<script>
+var canvas = document.getElementById("canvas");
+var context = canvas.getContext("2d");
+
+//make the canvas full screen
+canvas.height = window.innerHeight;
+canvas.width = window.innerWidth;
+
+var chinese = "田由甲申甴电甶男甸甹町画甼甽甾甿畀畁畂畃畄畅畆畇畈畉畊畋界畍畎畏畐畑";
+
+var chineses = chinese.split("");
+
+var fontSize = 10;
+var columns = canvas.width/fontSize;
+var yCoordinates = [];
+for(x=0; x<columns; x++) {
+    yCoordinates[x] = Math.floor(columns*Math.random());
+}
+
+function draw() {
+    //每次用画布盖掉之前的字，值越大，透明度越低
+    context.fillStyle = "rgba(0,0,0,0.05)";
+    context.fillRect(0, 0, canvas.width, canvas.height);
+    
+    //green text
+    context.fillStyle = "#0F0";
+    
+    var text = "";
+    var x = 0;
+    var y = 0;
+    for(x=0; x<columns; x++) {
+    
+        text = chineses[Math.floor(Math.random()*chinese.length)];
+        context.fillText(text, x*fontSize, yCoordinates[x]*fontSize);
+        
+        
+        yCoordinates[x]++;
+        
+        if(yCoordinates[x]>columns) {
+            yCoordinates[x] = 0;
+        }
+        
+    }
+    
+}
+
+setInterval(draw, 100);
+</script>
